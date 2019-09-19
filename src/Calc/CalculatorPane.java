@@ -3,15 +3,13 @@ package Calc;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
-public class LayeredPane extends JFrame {
-    public LayeredPane() {
+class CalculatorPane extends JFrame {
+    CalculatorPane() {
         // создание окна
-        super("Graphical Calculator");
+        super("Graphic Calculator");
 
         // выход при закрытии окна
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -31,7 +29,10 @@ public class LayeredPane extends JFrame {
         JTextField field2 = new JTextField();
         add(field2);
         add(field1);
-// Создаем панель меню
+        field1.setText("0");
+        field2.setText("0");
+
+// Создаем панель меню (просто попробовать)
         JMenuBar menubar = new JMenuBar();
 
         // Создаем меню
@@ -43,8 +44,8 @@ public class LayeredPane extends JFrame {
         itm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                field1.setText(" ");
-                field2.setText(" ");
+                field1.setText("0");
+                field2.setText("0");
             }
         });
         menu.add(itm);
@@ -54,6 +55,7 @@ public class LayeredPane extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Close pressed...");
+                System.exit(0);
             }
         });
         menu.add(itm);
@@ -82,13 +84,14 @@ public class LayeredPane extends JFrame {
 
         lp.add(field1);
         lp.add(field2);
+
         //        Обработка кликов по кнопке
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.z = Main.x + Main.y;
                 System.out.println(Main.z);
-                JOptionPane.showMessageDialog(LayeredPane.this,
+                JOptionPane.showMessageDialog(CalculatorPane.this,
                         "Результат: " + Main.z);
             }
         });
@@ -97,7 +100,7 @@ public class LayeredPane extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Main.z = Main.x - Main.y;
                 System.out.println(Main.z);
-                JOptionPane.showMessageDialog(LayeredPane.this,
+                JOptionPane.showMessageDialog(CalculatorPane.this,
                         "Результат: " + Main.z);
             }
         });
@@ -106,82 +109,106 @@ public class LayeredPane extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Main.z = Main.x * Main.y;
                 System.out.println(Main.z);
-                JOptionPane.showMessageDialog(LayeredPane.this,
+                JOptionPane.showMessageDialog(CalculatorPane.this,
                         "Результат: " + Main.z);
             }
         });
         button4.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Main.z = Main.x / Main.y;
                 System.out.println(Main.z);
-                JOptionPane.showMessageDialog(LayeredPane.this,
+                JOptionPane.showMessageDialog(CalculatorPane.this,
                         "Результат: " + Main.z);
             }
         });
         button5.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Main.z = Math.pow(Main.x, Main.y);
                 System.out.println(Main.z);
-                JOptionPane.showMessageDialog(LayeredPane.this,
+                JOptionPane.showMessageDialog(CalculatorPane.this,
                         "Результат: " + Main.z);
             }
         });
 
 //        Обработка нажатия кнопки Enter в текстовом поле
 
+/*
         field1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.x = Double.parseDouble(field1.getText());
-                System.out.println("Операнд1 : " + Main.x);
-            }
-        });
-//        Обработка ввода и преобразование в число
-        field1.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if (!field1.getText().equals("")) {
+                if (numeralOrNot(field1.getText())) {
                     Main.x = Double.parseDouble(field1.getText());
                     System.out.println("Операнд1 : " + Main.x);
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if (!field1.getText().equals("")) {
-                    Main.x = Double.parseDouble(field1.getText());
-                    System.out.println("Операнд1 : " + Main.x);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                if (!field1.getText().equals("")) {
-                    Main.x = Double.parseDouble(field1.getText());
-                    System.out.println("Операнд1 : " + Main.x);
+                } else {
+                    JOptionPane.showMessageDialog(CalculatorPane.this,
+                            "Ошибка ввода! Введите число.");
                 }
             }
         });
         field2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!field2.getText().equals("")){
+                if (numeralOrNot(field2.getText())) {
                     Main.y = Double.parseDouble(field2.getText());
-                System.out.println("Операнд2: " + Main.y);}
+                    System.out.println("Операнд2: " + Main.y);
+                } else {
+                    JOptionPane.showMessageDialog(CalculatorPane.this,
+                            "Ошибка ввода! Введите число.");
+                }
             }
         });
-        field2.getDocument().addDocumentListener(new DocumentListener() {
+
+*/
+//        Обработка ввода и преобразование в число
+        field1.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                if (!field2.getText().equals("")) {
-                    Main.y = Double.parseDouble(field2.getText());
-                    System.out.println("Операнд2 : " + Main.y);
+                if (numeralOrNot(field1.getText())) {
+                    Main.x = Double.parseDouble(field1.getText());
+                    System.out.println("Операнд1 : " + Main.x);
+                } else {
+                    JOptionPane.showMessageDialog(CalculatorPane.this,
+                            "Ошибка ввода! Введите число.");
                 }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                if (!field2.getText().equals("")) {
+                if (numeralOrNot(field1.getText())) {
+                    Main.x = Double.parseDouble(field1.getText());
+                    System.out.println("Операнд1 : " + Main.x);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if (numeralOrNot(field1.getText())) {
+                    Main.x = Double.parseDouble(field1.getText());
+                    System.out.println("Операнд1 : " + Main.x);
+                } else {
+                    JOptionPane.showMessageDialog(CalculatorPane.this,
+                            "Ошибка ввода! Введите число.");
+                }
+            }
+        });
+        field2.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+
+                if (numeralOrNot(field2.getText())) {
+                    Main.y = Double.parseDouble(field2.getText());
+                    System.out.println("Операнд2 : " + Main.y);
+                } else {
+                    JOptionPane.showMessageDialog(CalculatorPane.this,
+                            "Ошибка ввода! Введите число.");
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (numeralOrNot(field2.getText())) {
                     Main.y = Double.parseDouble(field2.getText());
                     System.out.println("Операнд2 : " + Main.y);
                 }
@@ -189,9 +216,12 @@ public class LayeredPane extends JFrame {
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                if (!field2.getText().equals("")) {
+                if (numeralOrNot(field2.getText())) {
                     Main.y = Double.parseDouble(field2.getText());
                     System.out.println("Операнд2 : " + Main.y);
+                } else {
+                    JOptionPane.showMessageDialog(CalculatorPane.this,
+                            "Ошибка ввода! Введите число.");
                 }
             }
         });
@@ -200,6 +230,25 @@ public class LayeredPane extends JFrame {
         setBounds(600, 500, 350, 450);
 
         setVisible(true);
+    }
+
+    //Проверка ввода чисел
+    private static boolean numeralOrNot(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        int commaCount = 0;
+        for (int i = 0; i < str.length(); i++) {
+
+            if (str.charAt(i) == '.') {
+                commaCount++;
+            }
+            if ((!Character.isDigit(str.charAt(i)) && str.charAt(i) != '.' && str.charAt(i) != '-') || commaCount > 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
